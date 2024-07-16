@@ -45,26 +45,37 @@ def single_concurrency_service(service, current_time, test_name, concurrency, th
             statistics.append(res)
             if res["status"] == "Success":
                 LOG.info("Succeed to test [" + service + "] [" + test_name + "] [concurrency-" + str(concurrency) +
-                         "] case : [" + thread_name + ".case-" + str(j + 1) + "]. query_time : " + str(res["query_time"]) +
-                         " ms.")
+                         "] case : [" + thread_name + ".case-" + str(j + 1) + "]. sql_id : [" + str(res["sql_id"]) +
+                         "]. query_time : " + str(res["query_time"]) + " ms.")
             else:
                 LOG.info("Failed to test [" + service + "] [" + test_name + "] [concurrency-" + str(concurrency) +
-                         "] case : [" + thread_name + ".case-" + str(j + 1) + "].")
+                         "] case : [" + thread_name + ".case-" + str(j + 1) + "]. sql_id : [" + str(res["sql_id"]) +
+                         "].")
 
     elif service == "hologres":
         for j in range(len(shuffled_case)):
             res = hologres.connect_and_query(shuffled_case[j]["id"], j + 1, shuffled_case[j]["sql"], db_config)
             statistics.append(res)
-            LOG.info("Finish to test [" + service + "] [" + test_name + "] [concurrency-" + str(concurrency) +
-                     "] case : [" + thread_name + ".case-" + str(j + 1) + "]. query_time : " + str(res["query_time"]) +
-                     " ms.")
+            if res["status"] == "Success":
+                LOG.info("Succeed to test [" + service + "] [" + test_name + "] [concurrency-" + str(concurrency) +
+                         "] case : [" + thread_name + ".case-" + str(j + 1) + "]. sql_id : [" + str(res["sql_id"]) +
+                         "]. query_time : " + str(res["query_time"]) + " ms.")
+            else:
+                LOG.info("Failed to test [" + service + "] [" + test_name + "] [concurrency-" + str(concurrency) +
+                         "] case : [" + thread_name + ".case-" + str(j + 1) + "]. sql_id : [" + str(res["sql_id"]) +
+                         "].")
     elif service == "relyt":
         for j in range(len(shuffled_case)):
             res = relyt.connect_and_query(shuffled_case[j]["id"], j + 1, shuffled_case[j]["sql"], db_config)
             statistics.append(res)
-            LOG.info("Finish to test [" + service + "] [" + test_name + "] [concurrency-" + str(concurrency) +
-                     "] case : [" + thread_name + ".case-" + str(j + 1) + "]. query_time : " + str(res["query_time"]) +
-                     " ms.")
+            if res["status"] == "Success":
+                LOG.info("Succeed to test [" + service + "] [" + test_name + "] [concurrency-" + str(concurrency) +
+                         "] case : [" + thread_name + ".case-" + str(j + 1) + "]. sql_id : [" + str(res["sql_id"]) +
+                         "]. query_time : " + str(res["query_time"]) + " ms.")
+            else:
+                LOG.info("Failed to test [" + service + "] [" + test_name + "] [concurrency-" + str(concurrency) +
+                         "] case : [" + thread_name + ".case-" + str(j + 1) + "]. sql_id : [" + str(res["sql_id"]) +
+                         "].")
     else:
         print("Exit. service name must be 'doris/hologres/relyt'")
         LOG.error("Exit. service name must be 'doris/hologres/relyt'")
