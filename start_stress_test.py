@@ -144,14 +144,28 @@ if __name__ == "__main__":
             test_case_file = test_case_file + "doris_mqs_case.txt"
         else:
             print("Exit. test name of doris must be 'tpch_1t/tpch_10t'")
-            LOG.error("Exit. service name must be 'doris/hologres/relyt'")
+            LOG.error("Exit. test name of doris must be 'tpch_1t/tpch_10t'")
             sys.exit(1)
     elif service == "hologres":
         test_env_config = config.hologres_tpch_config
-        test_case_file = test_case_file + "hologres_tpch_case.txt"
+        if test_name == "tpch_1t":
+            test_case_file = test_case_file + "hologres_tpch_1t_case.txt"
+        elif test_name == "tpch_10t":
+            test_case_file = test_case_file + "hologres_tpch_10t_case.txt"
+        else:
+            print("Exit. test name of doris must be 'tpch_1t/tpch_10t'")
+            LOG.error("Exit. test name of doris must be 'tpch_1t/tpch_10t'")
+            sys.exit(1)
     elif service == "relyt":
         test_env_config = config.relyt_tpch_config
-        test_case_file = test_case_file + "relyt_tpch_case.txt"
+        if test_name == "tpch_1t":
+            test_case_file = test_case_file + "relyt_tpch_1t_case.txt"
+        elif test_name == "tpch_10t":
+            test_case_file = test_case_file + "relyt_tpch_10t_case.txt"
+        else:
+            print("Exit. test name of doris must be 'tpch_1t/tpch_10t'")
+            LOG.error("Exit. test name of doris must be 'tpch_1t/tpch_10t'")
+            sys.exit(1)
     else:
         print("Exit. service name must be 'doris/hologres/relyt'")
         LOG.error("Exit. service name must be 'doris/hologres/relyt'")
