@@ -50,7 +50,7 @@ def connect_and_query(sql_id, exec_seq, stmt, db_config):
     else:
         LOG.warning("Fail. sql : " + str(stmt) + ". ErrorMsg : " + str(error_message))
         result["status"] = "Fail"
-        result["error_message"] = str(error_message)
+        result["error_message"] = str(error_message).replace("\n", " ")
 
     result["sql_id"] = str(sql_id)
     result["exec_seq"] = str(exec_seq)
